@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth1-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth1
+  template:
+    metadata:
+      labels:
+        app: auth1
+    spec:
+      containers:
+        - name: auth1
+          image: itsfriday/authnew
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://auth1-mongo-srv:27017/auth1'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth1-srv
+spec:
+  selector:
+    app: auth1
+  ports:
+    - name: auth1
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
