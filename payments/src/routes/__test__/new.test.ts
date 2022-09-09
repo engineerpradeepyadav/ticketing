@@ -64,6 +64,7 @@ it('retruns a 400 when purchasing a cancelled order', async () => {
 });
 
 
+// test does not pass because of some changes in the file
 // it('returns a 204 with valid inputs', async () => {
 //     const userId = new mongoose.Types.ObjectId().toHexString();
 //     const order = Order.build({
